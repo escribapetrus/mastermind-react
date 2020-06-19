@@ -1,28 +1,28 @@
-import React, {useState, useEffect} from 'react'
-import _ from 'lodash'
+import React from 'react'
+import _ from 'lodash';
+import { useSecret } from '../context/SecretProvider'
+//components
+import Header from './Header'
 import Secret from "./Secret"
-
+import PlayerHand from './PlayerHand'
+//resources
 import pegs from '../resources/pegs'
+
 //map guesses
 //zip guesses and guess results
 
 function genSecret(arr,n){
-    let shuffled = arr.sort(() => .5 - Math.random());
+    let shuffled = _.shuffle(arr)
     return _.take(shuffled,n)
 }
 
 function GameScreen() {
-    let [secret, setSecret] = useState([])
-    
-    //initialize game with a secret
-    useEffect(() => {
-        setSecret(genSecret(pegs,4))
-    },[]);
+    let {secret, setSecret} = useSecret();
     return (
         <div className="GameScreen">
-            <button onClick={() => setSecret(genSecret(pegs,4))}>gen secret</button>
+            <Header setSecret={setSecret} pegs={pegs} genSecret={genSecret}/>
             <Secret secret={secret}/>
-
+            <PlayerHand pegs={pegs}/>
         </div>
     )
 }
