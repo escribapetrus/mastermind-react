@@ -22,7 +22,7 @@ function GameScreen() {
         <div className="GameScreen">
             <Header setSecret={setSecret} pegs={pegs} genSecret={genSecret}/>
             <Secret secret={secret}/>
-            <PlayerHand pegs={pegs}/>
+            <PlayerHand pegs={pegs} secret={secret}/>
         </div>
     )
 }

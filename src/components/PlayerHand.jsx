@@ -12,14 +12,28 @@ function reducer(state, action){
             return {guess: _.filter(state.guess, el => (el.id !== action.payload.id))};
         case 'reset':
             return {guess: []};
-        case 'guess':
-            return true;
         default:
             throw new Error()
     }
 }
 
-function PlayerHand({pegs}) {
+function getScore(guess, secret){
+    if(guess.length === 4 && secret.length === 4){
+        let guess_ = _.map(guess, x => x.num),
+            secret_ = _.map(secret, x => x.num),
+            zip_ = _.zip(guess_,secret_),
+            rights = _.map(zip_, x => {
+                if(x[0] === x[1]){ return 1}
+                else { return 0} }),
+            rights_ = _.reduce(rights, (x,y) => x + y, 0),
+            sNotInGuess = _.difference(secret_,guess_),
+            wrongs_ = secret.length - sNotInGuess.length - rights_
+        console.log({black: rights_, white: wrongs_})
+        return {rights_, wrongs_}    
+    }
+}
+
+function PlayerHand({pegs, secret}) {
     let [state,dispatch] = useReducer(reducer,{guess: []})
     return (
         <div className="PlayerHand">
@@ -29,7 +43,7 @@ function PlayerHand({pegs}) {
                     <span onClick={() => dispatch({type:'remove', payload: g})}>
                         {g.color}
                     </span>)}
-                <button>guess</button>
+                <button onClick={() => getScore(state.guess, secret)}>guess</button>
                 <button onClick={() => dispatch({type:'reset'})}>reset</button>
             </div>
             <div className="pegs">
