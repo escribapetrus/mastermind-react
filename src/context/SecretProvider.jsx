@@ -3,7 +3,7 @@ import React, {createContext, useState, useContext} from 'react';
 const SecretContext = createContext();
 
 export default function SecretProvider({children}){
-    let [secret, setSecret] = useState([])
+    let [secret, setSecret] = useState({pegs: [], display: false})
     return(
         <SecretContext.Provider value={{ secret, setSecret }}>
             {children}

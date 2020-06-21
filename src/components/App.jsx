@@ -1,30 +1,36 @@
 import React from 'react';
-import SecretProvider, {useSecret} from '../context/SecretProvider';
+import SecretProvider from '../context/SecretProvider';
+import GameStatusProvider from '../context/GameStatusProvider';
+import GuessProvider from '../context/GuessProvider';
+//components
 import GameScreen from "./GameScreen";
+import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
 
-import _ from 'lodash';
-import pegs from '../resources/pegs';
+//styles
 import '../stylesheets/App.scss';
 
-function genSecret(arr,n){
-    let shuffled = _.shuffle(arr)
-    return _.take(shuffled,n)
-}
+
 
 //initialize game with a secret
 // useEffect(() => {
 //     setSecret(genSecret(pegs,4))
 // },[]);
 
-
-
-
 function App() {
   return (
     <div className="App">
-      <SecretProvider>
-        <GameScreen/>
-      </SecretProvider>
+      <GameStatusProvider>
+        <SecretProvider>
+          <GuessProvider>
+            <Container>
+              <Paper>
+                <GameScreen/>
+              </Paper>
+            </Container>
+          </GuessProvider>
+        </SecretProvider>
+      </GameStatusProvider>
     </div>
   );
 }

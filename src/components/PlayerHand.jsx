@@ -1,7 +1,15 @@
 import React, {useReducer} from 'react'
+import { useGuesses } from '../context/GuessProvider'
+
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import Paper from '@material-ui/core/Paper';
+
 import _ from 'lodash'
 import { v4 as uuid } from 'uuid';
 
+import "../stylesheets/PlayerHand.scss"
 
 function reducer(state, action){
     switch (action.type){
@@ -13,10 +21,10 @@ function reducer(state, action){
         case 'reset':
             return {guess: []};
         default:
-            throw new Error()
+            throw new Error();
     }
 }
-
+//todo: create test for getScore
 function getScore(guess, secret){
     if(guess.length === 4 && secret.length === 4){
         let guess_ = _.map(guess, x => x.num),
@@ -28,30 +36,46 @@ function getScore(guess, secret){
             rights_ = _.reduce(rights, (x,y) => x + y, 0),
             sNotInGuess = _.difference(secret_,guess_),
             wrongs_ = secret.length - sNotInGuess.length - rights_
-        console.log({black: rights_, white: wrongs_})
-        return {rights_, wrongs_}    
+        return {guess: guess, blacks: rights_, whites: wrongs_}    
+    } else {
+        return {}
     }
 }
 
+
 function PlayerHand({pegs, secret}) {
-    let [state,dispatch] = useReducer(reducer,{guess: []})
+    let [state,dispatch] = useReducer(reducer,{guess: []}),
+        {guesses, setGuesses} = useGuesses();
+
     return (
         <div className="PlayerHand">
-            <div className="guess">
-                <h2>your guess</h2>
-                {state.guess.map(g => 
-                    <span onClick={() => dispatch({type:'remove', payload: g})}>
-                        {g.color}
-                    </span>)}
-                <button onClick={() => getScore(state.guess, secret)}>guess</button>
-                <button onClick={() => dispatch({type:'reset'})}>reset</button>
-            </div>
-            <div className="pegs">
-                <h2>choose pegs:</h2>
+            <h2>choose pegs:</h2>
+            <div className="color-buttons">
                 {pegs.map(p => 
-                    <span onClick={() => dispatch({type:'add', payload: p})}>
+                    <Button 
+                        style={{ backgroundColor: p.color, color: p.color}}
+                        onClick={() => dispatch({type:'add', payload: p})}>
                         {p.color}
-                    </span>)}
+                    </Button>)}
+            </div>
+            <Paper className="player-guess">
+            {state.guess.map(g => 
+                <Icon 
+                    style={{ color: g.color }}
+                    onClick={() => dispatch({type:'remove', payload: g})}>
+                    stop_circle
+                </Icon>
+            )}
+            </Paper>
+            <div className="action-buttons">
+                <ButtonGroup>
+                    <Button onClick={() => {
+                        if (state.guess.length === 4 && secret.length === 4) {
+                        setGuesses(_.concat(guesses,getScore(state.guess, secret)));
+                        dispatch({type:'reset'})
+                        }}}>guess</Button>
+                    <Button onClick={() => dispatch({type:'reset'})}>reset</Button>
+                </ButtonGroup>
             </div>
         </div>
     )
