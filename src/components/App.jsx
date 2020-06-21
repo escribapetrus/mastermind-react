@@ -2,6 +2,7 @@ import React from 'react';
 import SecretProvider from '../context/SecretProvider';
 import GameStatusProvider from '../context/GameStatusProvider';
 import GuessProvider from '../context/GuessProvider';
+import MessageProvider from '../context/MessageProvider';
 //components
 import GameScreen from "./GameScreen";
 import Paper from '@material-ui/core/Paper';
@@ -23,11 +24,13 @@ function App() {
       <GameStatusProvider>
         <SecretProvider>
           <GuessProvider>
-            <Container>
-              <Paper>
-                <GameScreen/>
-              </Paper>
-            </Container>
+            <MessageProvider>
+              <Container>
+                <Paper>
+                  <GameScreen/>
+                </Paper>
+              </Container>
+            </MessageProvider>
           </GuessProvider>
         </SecretProvider>
       </GameStatusProvider>

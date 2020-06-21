@@ -1,11 +1,11 @@
 import React from 'react';
-import { useGameStatus } from '../context/GameStatusProvider'
+import { useMessage } from '../context/MessageProvider'
 
 import Modal from '@material-ui/core/Modal';
 import Paper from '@material-ui/core/Paper';
 
 export default function ModalMessage() {
-const {gameStatus, setGameStatus} = useGameStatus();
+const {message, setMessage} = useMessage();
 
 //   const handleOpen = () => {
 //     setOpen(true);
@@ -18,12 +18,12 @@ const {gameStatus, setGameStatus} = useGameStatus();
   return (
     <div>
       <Modal
-        open={!!gameStatus.message}
-        onClose={() => setGameStatus({active: false, message: null})}
+        open={!!message}
+        onClose={() => setMessage(null)}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description">
         <Paper>
-           <p>{gameStatus.message}</p>
+           <p>{message}</p>
         </Paper>
       </Modal>
     </div>

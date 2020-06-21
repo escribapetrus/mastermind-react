@@ -3,7 +3,7 @@ import React, {createContext, useState, useContext} from 'react'
 const GameStatusContext = createContext();
 
 export default function GameStatusProvider({children}){
-    let [gameStatus, setGameStatus] = useState({active: false, message: null})
+    let [gameStatus, setGameStatus] = useState({active: false})
     return(
         <GameStatusContext.Provider value={{gameStatus, setGameStatus}}>
             {children}

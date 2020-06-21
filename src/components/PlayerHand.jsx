@@ -43,7 +43,7 @@ function getScore(guess, secret){
 }
 
 
-function PlayerHand({pegs, secret}) {
+function PlayerHand({pegs, secret, gameStatus}) {
     let [state,dispatch] = useReducer(reducer,{guess: []}),
         {guesses, setGuesses} = useGuesses();
 
@@ -70,7 +70,7 @@ function PlayerHand({pegs, secret}) {
             <div className="action-buttons">
                 <ButtonGroup>
                     <Button onClick={() => {
-                        if (state.guess.length === 4 && secret.length === 4) {
+                        if (state.guess.length === 4 && secret.length === 4 && gameStatus) {
                         setGuesses(_.concat(guesses,getScore(state.guess, secret)));
                         dispatch({type:'reset'})
                         }}}>guess</Button>
