@@ -2,7 +2,7 @@ import React from 'react'
 import _ from 'lodash';
 
 import { useSecret } from '../context/SecretProvider'
-// import { useGameStatus } from '../context/GameStatusProvider'
+import { useGameStatus } from '../context/GameStatusProvider'
 import { useGuesses } from '../context/GuessProvider'
 
 import { Typography } from '@material-ui/core';
@@ -16,7 +16,7 @@ function genSecret(arr,n){
 
 function Header({pegs}) {
     let {setSecret} = useSecret(),
-        // {gameStatus, setGameStatus} = useGameStatus(),
+        {gameStatus, setGameStatus} = useGameStatus(),
         {setGuesses} = useGuesses();
     return (
         <header className="App-header">
@@ -25,7 +25,12 @@ function Header({pegs}) {
             <ButtonGroup>
                 <Button onClick={() => {
                     setSecret(genSecret(pegs,4));
-                    // setGameStatus(true);
+                    setGameStatus({
+                        active:true, message: `Welcome to MASTERMIND. 
+                        You have to find the secret using the colored pegs and hints. 
+                        Each black hint means a right color in the right position.
+                        Each white hint means a right color in the wrong position.`
+                    });
                     setGuesses([])
                 }}>New Game</Button>
             </ButtonGroup>
