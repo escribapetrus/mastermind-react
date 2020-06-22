@@ -1,14 +1,15 @@
 import React from 'react'
 import _ from 'lodash';
-
+// context providers
 import { useSecret } from '../context/SecretProvider'
 import { useGameStatus } from '../context/GameStatusProvider'
 import { useMessage } from '../context/MessageProvider'
 import { useGuesses } from '../context/GuessProvider'
-
-import { Typography } from '@material-ui/core';
+// components
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
+
+import "../stylesheets/Header.scss"
 
 function genSecret(arr,n){
     let shuffled = _.shuffle(arr)
@@ -17,12 +18,12 @@ function genSecret(arr,n){
 
 function Header({pegs}) {
     let {setSecret} = useSecret(),
-        {gameStatus, setGameStatus} = useGameStatus(),
+        {setGameStatus} = useGameStatus(),
         {setGuesses} = useGuesses(),
-        {message, setMessage} = useMessage();
+        {setMessage} = useMessage();
     return (
-        <header className="App-header">
-            <Typography variant="h1">MASTERMIND REACT</Typography>
+        <header className="Header">
+            <h1 style={{textAlign:"center"}}>MASTERMIND REACT</h1>
             <ButtonGroup>
                 <Button onClick={() => {
                     setSecret(genSecret(pegs,4));
@@ -34,9 +35,11 @@ function Header({pegs}) {
                 <Button onClick={() => {
                     setMessage(`
                         Welcome to MASTERMIND. 
-                        You have to find the secret using the colored pegs and hints. 
+                        Discover the secret using the colored pegs and hints. 
                         Each black hint means a right color in the right position.
                         Each white hint means a right color in the wrong position.
+                        Click on the colors to choose your pegs, and click on guess
+                        to see if you have the answer.
                     `);
                 }}>Rules</Button>
             </ButtonGroup>

@@ -1,40 +1,32 @@
 import React from 'react';
+//context providers
 import SecretProvider from '../context/SecretProvider';
 import GameStatusProvider from '../context/GameStatusProvider';
 import GuessProvider from '../context/GuessProvider';
 import MessageProvider from '../context/MessageProvider';
 //components
 import GameScreen from "./GameScreen";
-import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
+import {Container,Box} from '@material-ui/core';
 
 //styles
 import '../stylesheets/App.scss';
 
-
-
-//initialize game with a secret
-// useEffect(() => {
-//     setSecret(genSecret(pegs,4))
-// },[]);
-
 function App() {
   return (
-    <div className="App">
+    <Box my={3}>
+    <Container>
       <GameStatusProvider>
         <SecretProvider>
           <GuessProvider>
             <MessageProvider>
-              <Container>
-                <Paper>
-                  <GameScreen/>
-                </Paper>
-              </Container>
+              <GameScreen/>
             </MessageProvider>
           </GuessProvider>
         </SecretProvider>
       </GameStatusProvider>
-    </div>
+    </Container>
+    </Box>
+
   );
 }
 

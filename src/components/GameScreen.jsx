@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import _ from 'lodash';
 import { useSecret } from '../context/SecretProvider'
 import { useGameStatus } from '../context/GameStatusProvider'
@@ -6,6 +6,7 @@ import { useGuesses } from '../context/GuessProvider'
 import { useMessage } from '../context/MessageProvider'
 
 //components
+import {Paper, Box, Divider} from '@material-ui/core';
 import Header from './Header'
 import Secret from "./Secret"
 import PlayerHand from './PlayerHand'
@@ -20,9 +21,8 @@ import '../stylesheets/GameScreen.scss'
 function GameScreen() {
     let {secret, setSecret} = useSecret(),
         {gameStatus, setGameStatus} = useGameStatus(),
-        {guesses, setGuesses} = useGuesses(),
-        {message, setMessage} = useMessage();
-
+        {guesses} = useGuesses(),
+        {setMessage} = useMessage();
 
     useEffect(() => {
         if(gameStatus.active && guesses.length > 1 && _.last(guesses).blacks === 4){
@@ -39,16 +39,25 @@ function GameScreen() {
         }
     })
     return (
-        <div className="GameScreen">
-            <Header pegs={pegs}/>
-            {(secret.pegs.length > 1) && <Secret secret={secret.pegs} display={secret.display}/>}
-            <ModalMessage/>
-            <Board/>
-            <PlayerHand 
-                pegs={pegs} 
-                secret={secret.pegs}
-                gameStatus={gameStatus.active}/>
-        </div>
+        <Paper>
+            <Box 
+                p={1} 
+                display="flex"
+                flexDirection="column" 
+                justifyContent="center" 
+                alignItems="center">
+                <Header pegs={pegs}/>
+                {(secret.pegs.length > 1) && <Secret secret={secret.pegs} display={secret.display}/>}
+                <Divider/>
+                <ModalMessage/>
+                <Board/>
+                <Divider/>
+                <PlayerHand 
+                    pegs={pegs} 
+                    secret={secret.pegs}
+                    gameStatus={gameStatus.active}/>
+            </Box>
+        </Paper>
     )
 }
 

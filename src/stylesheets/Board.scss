@@ -1,11 +1,10 @@
-// .Board {
-//     width: 100% ;
-//     ul{
-//         list-style: none;
-//         li{
-//             display: flex;
-//             flex-direction: row;
-//             justify-content: space-between;
-//         }
-//     }
-// }
+.Board {
+    ul{
+        list-style: none;
+        li{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    }
+}

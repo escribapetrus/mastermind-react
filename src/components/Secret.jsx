@@ -1,15 +1,14 @@
 import React from 'react'
-import Icon from '@material-ui/core/Icon';
+import {Icon, Box} from '@material-ui/core';
 
 function Secret({secret, display}) {
     return (
-        <div className="Secret">
-            <h2>the secret:</h2>
+        <Box m={2}>
             {
-                display ? secret.map(s => <Icon style={{color: s.color}}>stop_circle</Icon>)
-                : secret.map(s => <Icon style={{color: "black"}}>stop_circle</Icon>)
+                display ? secret.map(s => <Icon style={{color: s.color, fontSize: "3rem"}}>stop_circle</Icon>)
+                : secret.map(s => <Icon style={{color: "black", fontSize: "3rem"}}>stop_circle</Icon>)
             }
-        </div>
+        </Box>
     )
 }
 

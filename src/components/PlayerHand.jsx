@@ -4,12 +4,12 @@ import { useGuesses } from '../context/GuessProvider'
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import Paper from '@material-ui/core/Paper';
+import { Grid, Container, Box } from '@material-ui/core';
 
 import _ from 'lodash'
 import { v4 as uuid } from 'uuid';
 
-import "../stylesheets/PlayerHand.scss"
+// import "../stylesheets/PlayerHand.scss"
 
 function reducer(state, action){
     switch (action.type){
@@ -48,26 +48,41 @@ function PlayerHand({pegs, secret, gameStatus}) {
         {guesses, setGuesses} = useGuesses();
 
     return (
-        <div className="PlayerHand">
-            <h2>choose pegs:</h2>
-            <div className="color-buttons">
-                {pegs.map(p => 
-                    <Button 
-                        style={{ backgroundColor: p.color, color: p.color}}
-                        onClick={() => dispatch({type:'add', payload: p})}>
-                        {p.color}
-                    </Button>)}
-            </div>
-            <Paper className="player-guess">
+        <Container>
+            <Box
+                display="flex"
+                justifyContent="center"
+                m={2}
+                minHeight="60px"
+            >
             {state.guess.map(g => 
                 <Icon 
-                    style={{ color: g.color }}
+                    style={{ color: g.color, fontSize: "2.5rem",}}
                     onClick={() => dispatch({type:'remove', payload: g})}>
                     stop_circle
                 </Icon>
             )}
-            </Paper>
-            <div className="action-buttons">
+            </Box>
+            <Grid 
+                container
+                justify="center"
+                alignItems="center"
+                spacing={1}>
+                {pegs.map(p => 
+                    <Grid item xs={6} sm={4} md={1}>
+                        <Button 
+                            style={{ backgroundColor: p.color, color: p.color, width: "100%"}}
+                            onClick={() => dispatch({type:'add', payload: p})}>
+                            {p.color}
+                        </Button>
+                    </Grid>
+                )}
+            </Grid>
+            <Box 
+                m={1}
+                display="flex"
+                flexDirection="row"
+                justifyContent="center">
                 <ButtonGroup>
                     <Button onClick={() => {
                         if (state.guess.length === 4 && secret.length === 4 && gameStatus) {
@@ -76,8 +91,8 @@ function PlayerHand({pegs, secret, gameStatus}) {
                         }}}>guess</Button>
                     <Button onClick={() => dispatch({type:'reset'})}>reset</Button>
                 </ButtonGroup>
-            </div>
-        </div>
+            </Box>
+        </Container>
     )
 }
 

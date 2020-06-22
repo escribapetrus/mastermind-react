@@ -1,31 +1,29 @@
 import React from 'react';
+
 import { useMessage } from '../context/MessageProvider'
 
-import Modal from '@material-ui/core/Modal';
-import Paper from '@material-ui/core/Paper';
+import {Modal, Paper, Container, Box, Backdrop} from '@material-ui/core';
 
-export default function ModalMessage() {
-const {message, setMessage} = useMessage();
-
-//   const handleOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
+function ModalMessage() {
+  const {message, setMessage} = useMessage();
   return (
-    <div>
       <Modal
         open={!!message}
         onClose={() => setMessage(null)}
+        BackdropComponent={Backdrop}
+        BackdropProps={{ timeout: 700, }}
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description">
-        <Paper>
-           <p>{message}</p>
-        </Paper>
+        <Box 
+          width="70%"
+          style={{margin: "150px auto"}}
+          >
+          <Paper style={{padding:"20px", textAlign: "center"}}>
+            <p>{message}</p>
+          </Paper>
+        </Box>
       </Modal>
-    </div>
   );
 }
+
+export default ModalMessage
