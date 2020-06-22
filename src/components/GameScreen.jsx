@@ -41,6 +41,7 @@ function GameScreen() {
     return (
         <Paper>
             <Box 
+                my={4}
                 p={1} 
                 display="flex"
                 flexDirection="column" 

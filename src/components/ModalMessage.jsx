@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useMessage } from '../context/MessageProvider'
 
-import {Modal, Paper, Container, Box, Backdrop} from '@material-ui/core';
+import {Modal, Paper, Box, Backdrop} from '@material-ui/core';
 
 function ModalMessage() {
   const {message, setMessage} = useMessage();

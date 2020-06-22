@@ -7,13 +7,14 @@ import MessageProvider from '../context/MessageProvider';
 //components
 import GameScreen from "./GameScreen";
 import {Container,Box} from '@material-ui/core';
+import Footer from './Footer'
 
 //styles
 import '../stylesheets/App.scss';
 
 function App() {
   return (
-    <Box my={3}>
+    <Box minHeight="100vh" display="flex" flexDirection="column" justifyContent="space-between">
     <Container>
       <GameStatusProvider>
         <SecretProvider>
@@ -25,6 +26,7 @@ function App() {
         </SecretProvider>
       </GameStatusProvider>
     </Container>
+    <Footer/>
     </Box>
 
   );
