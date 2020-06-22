@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "81d22e9f031b2fe0fe68a1044edf1d4f",
+    "revision": "71d8fccc0aa1008c2eb673d2dcb58305",
     "url": "/mastermind-react/index.html"
   },
   {
