@@ -13,7 +13,6 @@ import "../stylesheets/Header.scss"
 
 function genSecret(arr,n){
     let secret = _.map(arr, x => _.sample(arr))
-    console.log(secret)
     return {pegs: _.take(secret,n), display: false}
 }
 
