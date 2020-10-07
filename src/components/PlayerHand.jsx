@@ -11,6 +11,19 @@ import { v4 as uuid } from 'uuid';
 
 // import "../stylesheets/PlayerHand.scss"
 
+function getNotInGuess(secret,guess){
+    let guess_ = guess.slice();
+    let res = [];
+    secret.map(el => {
+        if (guess_.includes(el)) {
+            guess_.splice(guess_.indexOf(el),1);
+        } else {
+            res.push(el)
+        }
+    })
+    return res
+}
+
 function reducer(state, action){
     switch (action.type){
         case 'add':
@@ -34,7 +47,7 @@ function getScore(guess, secret){
                 if(x[0] === x[1]){ return 1}
                 else { return 0} }),
             rights_ = _.reduce(rights, (x,y) => x + y, 0),
-            sNotInGuess = _.difference(secret_,guess_),
+            sNotInGuess = getNotInGuess(secret_,guess_),
             wrongs_ = secret.length - sNotInGuess.length - rights_
         return {guess: guess, blacks: rights_, whites: wrongs_}    
     } else {
@@ -97,3 +110,31 @@ function PlayerHand({pegs, secret, gameStatus}) {
 }
 
 export default PlayerHand
+
+
+// function getNotInGuess(secret,guess){
+//     let guess_ = guess.slice();
+//     let res = [];
+//     secret.map(el => {
+//         if (guess_.includes(el)) {
+//             guess_.splice(guess_.indexOf(el),1);
+//         } else {
+//             res.push(el)
+//         }
+//     })
+//     return res
+// }
+    
+    // if (secret_.length == 0) {
+    //     return res
+    // }
+    // else if (guess.includes(secret_[0])) {
+    //     secret_.shift()
+    //     guess.splice(guess.indexOf(secret_[0]),1)
+    //     return getNotInGuess(secret_, guess)
+    // } 
+    // else {
+    //     res.push(secret_.shift());
+
+    //     return getNotInGuess(secret_, guess)
+    // }
